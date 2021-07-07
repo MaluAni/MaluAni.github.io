@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<style>
+body {
+  background-image: url('../Emmy.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+</style>    
+<script type="text/javascript" src="brython.js"></script>
+<script type="text/javascript" src="brython_stdlib.js"></script>
+</head>
+
+<body onload="brython(1)">
+
+    <button id="button16" style="font-size:3vw">Begin</button>
+    <p><div id="zone16" class="zone" style="font-size:3vw"></div>      
+    <textarea id="textarea16" rows=1 cols=5 autocomplete="off" style="font-size:3vw"></textarea>
+    <button id="button1" style="font-size:3vw">Check</button>
+    <p><div id="zone1" class="zone" style="font-size:3vw"></div>
+    <button id="button2" style="font-size:3vw">Again?</button>
+    <p><div id="zone2" class="zone" style="font-size:3vw"></div>
+    <script type="text/python" id="script16">
+    from browser import document, html
+    import random
+    
+    
+    First = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    Second = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    first = First[random.randint(0, len(First) - 1)]
+    second = Second[random.randint(0, len(Second) - 1)]
+    result = first * second
+    corrcounter = 0
+    wrongcounter = 0
+    
+    def show_values(event):
+        fun_first = first
+        fun_second = second
+        text1 = "How much is " + str(fun_first) + " times " + str(fun_second)
+        text2 = "Type answer below then press Check button "     
+        document["zone16"].clear()
+        document["zone16"] <= (f"{text1}",
+            html.BR(), f"{text2}")           
+    document["button16"].bind("click", show_values)
+    
+    def check_values(event): 
+        global corrcounter
+        global wrongcounter
+        fun_result = result
+        text = document["textarea16"].value
+        if int(text) == result:
+            text3 = "Correct"
+            corrcounter += 1
+            document["zone1"].clear()
+            document["zone1"] <= (f"{text3}")
+            
+        else:
+            text4 = "Wrong"
+            wrongcounter += 1
+            document["zone1"].clear()
+            document["zone1"] <= (f"{text4}")
+        
+    document["button1"].bind("click", check_values)
+    
+    def clear(event):  
+        global first, second, result, corrcounter, wrongcounter
+        document["zone16"].clear()
+        document["zone1"].clear()
+        document["textarea16"].value = "" 
+        first = First[random.randint(0, len(First) - 1)]
+        second = Second[random.randint(0, len(Second) - 1)]
+        result = first * second
+        document["zone2"].clear()    
+        document["zone2"] <= (f"Correct: {str(corrcounter)}",
+            html.BR(), f"Wrong: {str(wrongcounter)}")       
+        document.restart()
+                
+    document["button2"].bind("click", clear)
+    
+    
+    </script>
+    
+    <p>
+    <pre class="python"></pre>
+    <p>
+
+
+</body>
+
+</html>
