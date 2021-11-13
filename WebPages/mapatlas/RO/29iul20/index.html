@@ -31,11 +31,11 @@
 <body>
 <div id='map'></div>
 
-<script type="text/javascript" src="SV.js"></script>
+<script type="text/javascript" src="judete_json.js"></script>
 
 <script type="text/javascript">
 
-var map = L.map('map').setView([47.50, 25.7], 9);
+var map = L.map('map').setView([45.65, 25.6], 6);
 
 L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
 // control that shows state info on hover
@@ -48,10 +48,10 @@ L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
 	};
 
 	info.update = function (props) {
-		this._div.innerHTML = '<h4>UAT Suceava carantina</h4>' +  (props ?
-			'<b>' + props.name + '</b>'
+		this._div.innerHTML = '<h4>Cazuri Covid-19 Romania 29 Iulie 2020 - 48.235</h4>' +  (props ?
+			'<b>' + props.countyId + ': ' + 'Cazuri: ' + props.cazuri + ' Crestere: ' + props.crestere +'</b>'
 			
-			: 'Mouse over pentru fiecare UAT');
+			: 'Mouse over pentru fiecare judet');
 	};
 
 	info.addTo(map);
@@ -59,8 +59,11 @@ L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
 
 	// get color depending on population density value
 	function getColor(d) {
-         return d >= 1 ? '#0a0a0a' :
-				
+         return d > 100 ? '#f75128' :
+				d > 75  ? '#ffb829' :
+				d > 50  ? '#f4ff2b' :
+				d > 25  ? '#56f24b' :
+				d >= 1 ? '#27a84e' :
 
 			
 							'#ffffff';
@@ -73,7 +76,7 @@ L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
 			color: 'white',
 			dashArray: '3',
 			fillOpacity: 0.7,
-			fillColor: getColor(feature.properties.Lockdown)
+			fillColor: getColor(feature.properties.crestere)
 		};
 	}
 
@@ -118,15 +121,15 @@ L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
 		onEachFeature: onEachFeature
 	}).addTo(map);
 
-	//map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">Scaderi procentuale vot PSD</a>');
+	
 
 
-	var legend = L.control({position: 'bottomright'});
+	var legend = L.control({position: 'topright'});
 
 	legend.onAdd = function (map) {
 
 		var div = L.DomUtil.create('div', 'info legend'),
-			grades = [1, 2, 5, 10, 20],
+			grades = [1, 25, 50, 75, 100],
 			labels = [],
 			from, to;
 
@@ -143,7 +146,7 @@ L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map);
 		return div;
 	};
 
-	//legend.addTo(map);
+	legend.addTo(map);
 
 </script>
 
