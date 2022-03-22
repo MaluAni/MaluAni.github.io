@@ -140,7 +140,7 @@
                 table.style.borderWidth="1px";
                          
                 table.style.padding="1%";
-                $("<h1>New Cases Country</h1>").appendTo('#left');            
+                $("<h1>Total Deaths Country</h1>").appendTo('#left');            
                 $(table).appendTo('#left');            
         }
             window.onload = tableShow();          
@@ -209,7 +209,7 @@
             table.style.borderWidth="1px";
                     
             table.style.padding="1%";       
-            $("<h1>New Cases Nations</h1>").appendTo('#left');          
+            $("<h1>Total Deaths Nations</h1>").appendTo('#left');          
             $(table).appendTo('#left');            
     }
     fetch('https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=cumDeaths28DaysByDeathDate&format=json')
@@ -269,7 +269,7 @@
             table.style.borderWidth="1px";
                      
             
-            $("<h1>New Cases Region</h1>").appendTo('#left');         
+            $("<h1>Total Deaths Region</h1>").appendTo('#left');         
             $(table).appendTo('#left');            
     
                   
@@ -304,7 +304,7 @@
     </div>
     <div class="column">
     <div id="middle">
-    <h1>Cases MAP</h1>
+    <h1>Total Deaths MAP</h1>
       <iframe src="/WebPages/Project/Deaths/index.html" title="Cases" width="550" height="850" scrolling="no" padding="1%" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
     </div> 
     </div>
