@@ -1,0 +1,324 @@
+<head>
+    <title>Template</title>
+    <style>    
+        
+        body {
+            background-color: dimgray; 
+            font-family: Verdana, Geneva, Tahoma, sans-serif; 
+        }
+        .column {
+          float: left;      
+          padding: 1%;      
+          text-align: center;
+               
+        }
+        #left { 
+        float: left;      
+        padding: 0px;
+        width: 100%;
+        position: relative;
+        text-align: center;
+        background-color: #333;
+        color:#ddd;
+        }
+    
+        #middle {
+        width: 100%;       
+        position: relative;
+        padding: 1%;
+        background-color: #333;
+        color:#ddd;
+        }
+        
+        #right {
+        box-sizing: content-box;
+        float: right;      
+        padding: 0px;
+        width: 500px;   
+        position: relative; 
+        background-color: #333; 
+        color:#ddd;  
+        }   
+    
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+        .topnav {
+      background-color: #333;
+      overflow: hidden;
+    }
+    
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    
+    .topnav a:hover {
+      background-color: #ddd;
+      color: #04aa04;
+    }
+    
+    .topnav a.active {
+      background-color: #04aa04;
+      color: white;
+    }
+    a {  
+      color: #f2f2f2;  
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    a:hover {
+      background-color: #ddd;
+      color: #04aa04;
+    }
+    
+    
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript">                    
+            fetch('https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumDeaths28DaysByDeathDate&format=json')
+            .then (function(resp){
+                return resp.json();
+            })
+            .then (function(data){
+                jsonData = data.body;                      
+                jsonData.sort(function(a, b) {                
+                    if (a.date > b.date) {
+                      return -1;
+                    }                
+                  });
+            
+            function tableShow() {
+                var cols = [];             
+                for (var i = 0; i < jsonData.length; i++) {
+                    for (var k in jsonData[i]) {
+                        if (cols.indexOf(k) === -1) {                         
+                            // Push all keys to the array
+                            cols.push(k);
+                        }
+                    }                
+                }             
+                // Create a table element
+                var table = document.createElement("table");
+                
+                // Create table row tr element of a table
+                var tr = table.insertRow(-1);
+                 
+                var tableHeader = ["0", "1", "Name", "Date", "Deaths"]; 
+            for (var i = 2; i < tableHeader.length; i++) {
+                     
+                    // Create the table header th element
+                    var theader = document.createElement("th");
+                    theader.innerHTML = tableHeader[i];
+                    theader.style.backgroundColor="beige"; 
+                    // Append columnName to the table row
+                    tr.appendChild(theader);
+                }
+                
+                // Adding the data to the table
+                for (var i = 0; i < 10; i++) {
+                     
+                    // Create a new row
+                    trow = table.insertRow(-1);
+                    for (var j = 2; j < cols.length; j++) {
+                        var cell = trow.insertCell(-1);
+                         
+                        // Inserting the cell at particular place
+                        cell.innerHTML = jsonData[i][cols[j]];
+                        cell.style.backgroundColor="beige";
+                    }
+                }
+                  
+                // Add the newly created table containing json data 
+                table.style.borderWidth="1px";
+                         
+                table.style.padding="1%";
+                $("<h1>New Cases Country</h1>").appendTo('#left');            
+                $(table).appendTo('#left');            
+        }
+            window.onload = tableShow();          
+        })
+        .catch (function(error){
+                console.log(error);
+            });
+            
+        </script>
+    <script type="text/javascript">                    
+        fetch('https://api.coronavirus.data.gov.uk/v2/data?areaType=nation&metric=cumDeaths28DaysByDeathDate&format=json')
+        .then (function(resp){
+            return resp.json();
+        })
+        .then (function(data){
+            jsonData = data.body;                      
+            jsonData.sort(function(a, b) {                
+                if (a.date > b.date) {
+                  return -1;
+                }                
+              });
+        
+        function tableShow() {
+            var cols = [];             
+            for (var i = 0; i < jsonData.length; i++) {
+                for (var k in jsonData[i]) {
+                    if (cols.indexOf(k) === -1) {                         
+                        // Push all keys to the array
+                        cols.push(k);
+                    }
+                }                
+            }             
+            // Create a table element
+            var table = document.createElement("table");
+            
+            // Create table row tr element of a table
+            var tr = table.insertRow(-1);
+            var tableHeader = ["0", "1", "Name", "Date", "Deaths"] 
+            for (var i = 2; i < tableHeader.length; i++) {
+                 
+                // Create the table header th element
+                var theader = document.createElement("th");
+                theader.innerHTML = tableHeader[i];
+                theader.style.backgroundColor="beige";
+                 
+                // Append columnName to the table row
+                tr.appendChild(theader);
+            }
+            
+            // Adding the data to the table
+            for (var i = 0; i < 4; i++) {
+                 
+                // Create a new row
+                trow = table.insertRow(-1);
+                for (var j = 2; j < cols.length; j++) {
+                    var cell = trow.insertCell(-1);
+                     
+                    // Inserting the cell at particular place
+                    cell.innerHTML = jsonData[i][cols[j]];
+                    cell.style.backgroundColor="beige";
+                    
+                }
+            }
+              
+            // Add the newly created table containing json data  
+            table.style.borderWidth="1px";
+                    
+            table.style.padding="1%";       
+            $("<h1>New Cases Nations</h1>").appendTo('#left');          
+            $(table).appendTo('#left');            
+    }
+    fetch('https://api.coronavirus.data.gov.uk/v2/data?areaType=region&metric=cumDeaths28DaysByDeathDate&format=json')
+        .then (function(resp){
+            return resp.json();
+        })
+        .then (function(data){
+            jsonData = data.body;                      
+            jsonData.sort(function(a, b) {                
+                if (a.date > b.date) {
+                  return -1;
+                }                
+              });
+        
+        
+            var cols = [];             
+            for (var i = 0; i < jsonData.length; i++) {
+                for (var k in jsonData[i]) {
+                    if (cols.indexOf(k) === -1) {                         
+                        // Push all keys to the array
+                        cols.push(k);
+                    }
+                }                
+            }             
+            // Create a table element
+            var table = document.createElement("table");
+            
+            
+            // Create table row tr element of a table
+            var tr = table.insertRow(-1);
+            var tableHeader = ["0", "1", "Name", "Date", "Deaths"] 
+            for (var i = 2; i < tableHeader.length; i++) {
+                 
+                // Create the table header th element
+                var theader = document.createElement("th");
+                theader.innerHTML = tableHeader[i];
+                theader.style.backgroundColor="beige"; 
+                // Append columnName to the table row
+                tr.appendChild(theader);
+            }
+            
+            // Adding the data to the table
+            for (var i = 0; i < 9; i++) {
+                 
+                // Create a new row
+                trow = table.insertRow(-1);
+                for (var j = 2; j < cols.length; j++) {
+                    var cell = trow.insertCell(-1);
+                     
+                    // Inserting the cell at particular place
+                    cell.innerHTML = jsonData[i][cols[j]];
+                    cell.style.backgroundColor="beige";
+                }
+            }
+              
+            // Add the newly created table containing json data 
+            table.style.borderWidth="1px";
+                     
+            
+            $("<h1>New Cases Region</h1>").appendTo('#left');         
+            $(table).appendTo('#left');            
+    
+                  
+    })
+    .catch (function(error){
+            console.log(error);
+        });
+        window.onload = tableShow();
+    })
+    .catch (function(error){
+            console.log(error);
+        });
+    </script>
+    </head>
+    
+    <body>
+        <div class="topnav">
+            <a class="active" href="#home">Home</a>
+            <a href="cases.html">Cases</a>
+            <a href="rate.html">Rolling Rate</a>
+            <a href="vaccines.html">Vaccines</a>
+            <a href="deaths.html">Deaths</a>
+          </div>
+    
+        <div class="row"> 
+            <div class="column">
+                <div id="left">  
+                <h1>Cases Data</h1> 
+                      
+      
+                </div>
+    </div>
+    <div class="column">
+    <div id="middle">
+    <h1>Cases MAP</h1>
+      <iframe src="/cases/index.html" title="Cases" width="550" height="850" scrolling="no" padding="1%" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+    </div> 
+    </div>
+    
+    <div class="column">   
+    <div id="right">
+        
+        <h2>Covid-19 Deaths Summary</h2>
+        
+        
+        
+    
+    </div>
+    </div>
+    </div>
+      
+      </body>
