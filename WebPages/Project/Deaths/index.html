@@ -100,7 +100,7 @@ function mapSetup() {
 	info.update = function (props) {
 		this._div.innerHTML = (props ?
 			'<h4>Covid-19 Data ' + props.date + '</h4>' + 
-			'<b>Unitary Admin: ' + props.lad17nm + 'Total deaths 28 days after diagnostic: ' + props.newDeaths28DaysByDeathDate + '</b>' 
+			'<b>Unitary Admin: ' + props.lad17nm + '</br>' + 'Total deaths 28 days after diagnostic: ' + props.cumDeaths28DaysByDeathDate + '</b>' 
 			: 'Mouse over for each Admin level');
 	};
 
@@ -109,15 +109,15 @@ function mapSetup() {
 
 	// get color depending on population density value
 	function getColor(d) {
-         return d > 50 ? '#28052e' :
-				d > 20 ? '#5e0f4b' :
-				d > 10 ? '#7A0404':
-				d > 8 ? '#AF1616':
-				d > 6 ? '#fc0b03' :
-				d > 4 ? '#fc6b03' :
-				d > 3  ? '#fcad03' :
-				d > 2  ? '#d7fc03' :
-				d > 1  ? '#6ac449' :
+         return d > 1000 ? '#28052e' :
+				d > 500 ? '#5e0f4b' :
+				d > 400 ? '#7A0404':
+				d > 300 ? '#AF1616':
+				d > 250 ? '#fc0b03' :
+				d > 200 ? '#fc6b03' :
+				d > 150  ? '#fcad03' :
+				d > 100  ? '#d7fc03' :
+				d > 50  ? '#6ac449' :
 				d >= 0  ? '#4a703b' :
 				
 
@@ -132,7 +132,7 @@ function mapSetup() {
 			color: 'white',
 			dashArray: '3',
 			fillOpacity: 0.7,
-			fillColor: getColor(feature.properties.newDeaths28DaysByDeathDate)
+			fillColor: getColor(feature.properties.cumDeaths28DaysByDeathDate)
 		};
 	}
 
@@ -182,7 +182,7 @@ function mapSetup() {
 	legend.onAdd = function (map) {
 
 		var div = L.DomUtil.create('div', 'info legend'),
-			grades = [0, 1, 2, 3, 4, 6, 8, 10, 20, 50],
+			grades = [0, 50, 100, 150, 200, 250, 300, 400, 500, 1000],
 			labels = [],
 			from, to;
 
