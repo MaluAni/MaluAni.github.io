@@ -100,7 +100,8 @@ function mapSetup() {
 	info.update = function (props) {
 		this._div.innerHTML = (props ?
 			'<h4>Covid-19 Data ' + props.date + '</h4>' + 
-			'<b>Unitary Admin: ' + props.lad17nm + '</br>' +'New cases: ' + props.newCasesByPublishDate + '</b>' 
+			'<b>Unitary Admin: ' + props.lad17nm + '</br>' +
+				'New cases: ' + props.newCasesByPublishDate + '</b>' 
 			: 'Mouse over for each Admin level');
 	};
 
